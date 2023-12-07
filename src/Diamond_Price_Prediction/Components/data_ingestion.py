@@ -23,18 +23,21 @@ class DataIngestion:
         logging.info("Data ingestion started here")
 
         try:
-            data = pd.read_csv(Path(os.path.join("notebooks","data", "train.csv")))
+    
+            data = pd.read_csv(Path(os.path.join(Path(os.getcwd()).resolve().parents[2], 'notebooks', 'data', 'train.csv')))
             logging.info("Read the training data")
+            
 
-            os.makedirs(os.path.join(self.ingestion_config.raw_data_path), exist_ok=True)
-            data.to_csv(self.ingestion_config.raw_data_path, index=False)
+            os.makedirs(os.path.join(Path(os.getcwd()).resolve().parents[2],"artifacts"), exist_ok=True)
+            logging.info(f"directory is {os.path.join(Path(os.getcwd()).resolve().parents[2],self.ingestion_config.raw_data_path)}")
+            data.to_csv(os.path.join(Path(os.getcwd()).resolve().parents[2],self.ingestion_config.raw_data_path), index=False)
             logging.info("Saved the raw data in artifacts folder")
 
             train_data, test_data = train_test_split(data, test_size=0.3)
             logging.info("train test split completed")
 
-            train_data.to_csv(self.ingestion_config.train_data_path, index=False)
-            test_data.to_csv(self.ingestion_config.test_data_path, index=False)
+            train_data.to_csv(os.path.join(Path(os.getcwd()).resolve().parents[2],self.ingestion_config.train_data_path), index=False)
+            test_data.to_csv(os.path.join(Path(os.getcwd()).resolve().parents[2],self.ingestion_config.test_data_path), index=False)
 
             logging.info("Saved the train & test data in artifacts folder")
             logging.info("The data ingestion part is completed here")
@@ -44,3 +47,5 @@ class DataIngestion:
         except Exception as e:
             logging.info("Exception occured at the data ingestion stage")
             raise CustomExecption(e, sys)
+        
+
