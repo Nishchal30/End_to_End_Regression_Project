@@ -115,11 +115,19 @@ class DataTransformation:
 
             logging.info("Successfully applied preprocessor object on train & test dataset")
 
+            train_arr = np.c_[train_data_updated_tranformed, np.array(target_column_train_data)]
+            test_arr = np.c_[test_data_updated_tranformed, np.array(target_column_test_data)]
+
             save_object(
                 file_path = self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessor_obj
             )
 
+            logging.info("preprocessing pickle object created")
+
+            return(
+                train_arr, test_arr
+            )
         except Exception as e:
             logging.info("Exception occured in initiate data transformation")
             raise CustomExecption(e, sys)
