@@ -22,15 +22,17 @@ class ModelTrainer:
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
 
-    def initiate_model_training(self):
+    def initiate_model_training(self, train_data, test_data):
+
+        logging.info("model training will start here")
         
         try:
             logging.info("split dependent & independent variables from train & test data")
             X_train, y_train, X_test, y_test = (
-                train_arr[:,:-1],
-                train_arr[:,-1],
-                test_arr[:,:-1],
-                test_arr[:,-1]
+                train_data[:,:-1],
+                train_data[:,-1],
+                test_data[:,:-1],
+                test_data[:,-1]
             )
 
             models = {
@@ -62,6 +64,8 @@ class ModelTrainer:
                 file_path=self.model_trainer_config.trained_model_file_obj,
                 obj=best_model
             )
+
+            logging.info("model training is completed and pickle file has been saved")
 
         except Exception as e:
             logging.info("Exception occured in model training")

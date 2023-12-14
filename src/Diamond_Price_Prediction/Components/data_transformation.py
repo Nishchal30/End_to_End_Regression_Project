@@ -3,6 +3,7 @@
 import os, sys
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
 from dataclasses import dataclass
 from src.Diamond_Price_Prediction.logger import logging
@@ -21,7 +22,7 @@ from src.Diamond_Price_Prediction.utils.utils import save_object
 class DataTransformationConfig:
 
     # create a variable to store the output of data transformation into .pkl file into the artifacts folder
-    preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
+    preprocessor_obj_file_path = os.path.join(Path(os.getcwd()).resolve().parents[2], "artifacts", "preprocessor.pkl")
 
 # Create an actual data transformation class
 
@@ -84,7 +85,7 @@ class DataTransformation:
 
 
     # Method to initiate the above tranformation method on train & test data
-    def initiate_data_transformation(self, train_data_path, test_data_path, path):
+    def initiate_data_transformation(self, train_data_path, test_data_path):
         
         try:
 
@@ -128,6 +129,8 @@ class DataTransformation:
             return(
                 train_arr, test_arr
             )
+        
+            logging.info("Data transformation is completed here")
         except Exception as e:
             logging.info("Exception occured in initiate data transformation")
             raise CustomExecption(e, sys)
