@@ -11,11 +11,12 @@ from src.Diamond_Price_Prediction.exception import CustomExecption
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 
 from src.Diamond_Price_Prediction.utils.utils import save_object, evaluate_model
+from pathlib import Path
 
 
 @dataclass
 class ModelTrainerConfig:
-    trained_model_file_obj = os.path.join("artifacts", "model.pkl")
+    trained_model_file_obj = os.path.join(Path(os.getcwd()).resolve().parents[2],"artifacts", "model.pkl")
 
 
 class ModelTrainer:
@@ -27,19 +28,25 @@ class ModelTrainer:
         logging.info("model training will start here")
         
         try:
+            train_data = pd.DataFrame(train_data)
+            test_data = pd.DataFrame(test_data)
+
+
             logging.info("split dependent & independent variables from train & test data")
             X_train, y_train, X_test, y_test = (
-                train_data[:,:-1],
-                train_data[:,-1],
-                test_data[:,:-1],
-                test_data[:,-1]
+                train_data.iloc[:,:-1],
+                train_data.iloc[:,-1],
+                test_data.iloc[:,:-1],
+                test_data.iloc[:,-1]
             )
+
+            #logging.info(f"The datatype of X_train is {type(X_train)} X_test is {type(X_test)} y_train is {type(y_train)} y_test is {type(y_train)}")
 
             models = {
                 "LinearRegression": LinearRegression(),
                 "RidgeRegression": Ridge(),
                 "LassoRegression": Lasso(),
-                "ElasticNetRegression": ElasticNet
+                "ElasticNetRegression": ElasticNet()
             }
 
             model_report:dict = evaluate_model(X_train, y_train, X_test, y_test, models)

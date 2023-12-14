@@ -3,9 +3,6 @@ from src.Diamond_Price_Prediction.Components.data_transformation import DataTran
 from src.Diamond_Price_Prediction.Components.model_trainer import ModelTrainer
 import os, sys
 
-import sys
-sys.path.append(r'D:\Machine_Learning_Projects\End_to_End_Regression_Project\src\Diamond_Price_Prediction\Pipelines')
-
 from src.Diamond_Price_Prediction.logger import logging
 from src.Diamond_Price_Prediction.exception import CustomExecption
 import pandas as pd
