@@ -6,6 +6,7 @@ from src.Diamond_Price_Prediction.exception import CustomExecption
 from src.Diamond_Price_Prediction.utils.utils import load_object
 
 
+
 class PredictPipeline:
 
     def __init__(self):
@@ -14,8 +15,8 @@ class PredictPipeline:
     def predict(self, features):
         
         try:
-            preprocessor_path = os.path.join(Path(os.getcwd()).resolve().parent, "artifacts", "preprocessor.pkl")
-            model_path = os.path.join(Path(os.getcwd()).resolve().parent, "artifacts", "model.pkl")
+            preprocessor_path = os.path.join(Path(os.getcwd()), "artifacts", "preprocessor.pkl")
+            model_path = os.path.join(Path(os.getcwd()), "artifacts", "model.pkl")
 
             preprocessor_obj = load_object(preprocessor_path)
             model_obj = load_object(model_path)
